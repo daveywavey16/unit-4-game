@@ -1,38 +1,122 @@
+$(document).ready(function () {
 
-  var Letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];  // list of all letter options
-  var youWin = 0; // Total Wins
-  var youLose = 0; // Total Losses
-  var guessesLeft = 10; // Remaining Guesses
-  var guessedLetters = []; //Array to capture user letter input
+      // Your code here...
 
-  document.onkeyup = function(event) {
-    var yourGuess = event.key; //variable to calculate user's guess
-    guessedLetters.push(yourGuess); //This is suppose to capture letters .push = adds one or more elements to the end of an array and returns the new length of the array.
-    var psychicGuess = Letters[Math.floor(Math.random() * Letters.length)]; //randomly generates computers letter choice. 
+      //variables
+      var firstNum = "";
+      var secondNum = "";
+      var operator = "";
+      var total = "";
 
-    //If your guess matches the psychic's guess,
-    //a point is added to the "Wins" tally and the guesses tally restarts.
-    if (yourGuess === psychicGuess) {
-      youWin++;
-      guessesLeft = 10;
-      guessedLetters = [];
-    }
-    //If your guess does not not match the psychic's guess, your number of guesses remaining are reduced by one.
-    else {
-      guessesLeft--;
-    }
+      //inputs
 
-    //If the guesses remaining equals 0, you lose, an increment is added to the "Losses" tally and the points restart.
-    if (guessesLeft === 0){
-      youLose++;
-      guessesLeft = 10;
-      guessedLetters = [];
-    }
+      //numbers
+      //add number to first-number and second-number depending on operations
+      $(".number").on("click", function () {
+
+        if (total != "") {
+          clear();
+        }
+
+        if (operator === "") {
+          //working with first number
+          firstNum += this.value;
+          $("#first-number").text(firstNum);
+          console.log(firstNum);
+        } else {
+          //working with second number
+          secondNum += this.value;
+          $("#second-number").text(secondNum);
+        }
+      });
+
+      //operators
+      //when can we click
+      $(".operator").on("click", function () {
+
+        console.log(firstNum);
+        if (firstNum === "") {
+          return;
+        }
+
+        operator = this.value;
+
+        switch (operator) {
+          case "plus":
+            $("#operator").html("+");
+            break;
+          case "minus":
+            $("#operator").html("&minus;");
+            break;
+          case "times":
+            $("#operator").html("x");
+            break;
+          case "power":
+            $("#operator").html("^");
+            break;
+          case "divide":
+            $("#operator").html("&divide;");
+            break;
+          default:
+            break;
+
+        }
+      });
+
+      //equal
+      $(".equal").on("click", function () {
+        console.log(secondNum);
+        if (secondNum === "") {
+          return;
+        }
+
+        switch (operator) {
+          case "plus":
+            total = parseInt(firstNum) + parseInt(secondNum);
+            break;
+          case "minus":
+            total = parseInt(firstNum) - parseInt(secondNum);
+            break;
+          case "times":
+            total = parseInt(firstNum) * parseInt(secondNum);
+            break;
+          case "power":
+            total = Math.pow(parseInt(firstNum), parseInt(secondNum));
+            break;
+          case "divide":
+            total = parseInt(firstNum) / parseInt(secondNum);
+
+            break;
+          default:
+            break;
+
+        }
+        console.log(isFinite(total));
+        if (!isFinite(total)) {
+          $("#result").text("N/A");
+        } else {
+          $("#result").text(total);
+        }
 
 
-    var html = "<p>Guess what letter I'm thinking of:</p>" + "<p>Wins: " + youWin + "</p>" + "<p>Loses: "+ youLose + "<p>Guesses Remaining: " + guessesLeft + "<p>Guessed Letter: " +  guessedLetters.join(', '); //Show guessed letters here
-    document.querySelector("#psychicAct").innerHTML = html;
-    
-   
+      });
 
-  }
+      //clear
+      $(".clear").on("click", clear);
+
+      function clear() {
+        $("#first-number").empty();
+        $("#operator").empty();
+        $("#second-number").empty();
+        $("#result").empty();
+// $("#first-number,#operator,#second-number,#result").empty();                           ")
+        firstNum = "";
+        secondNum = "";
+        operator = "";
+        total = "";
+      }
+
+
+
+    });
+
