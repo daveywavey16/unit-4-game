@@ -33,14 +33,14 @@ $(document).ready(function() {
     }
     //adds the wins to the userTotal
     function yay() {
-        alert("You won!");
+        //alert("You won!");
         wins++;
         $('#numberWins').text(wins);
         reset();
     }
     //addes the losses to the userTotal
     function loser() {
-        alert("You lose!");
+        //alert("You lose!");
         losses++;
         $('#numberLosses').text(losses);
         reset()
