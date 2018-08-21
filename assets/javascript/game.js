@@ -1,122 +1,92 @@
-$(document).ready(function () {
-
-      // Your code here...
-
-      //variables
-      var firstNum = "";
-      var secondNum = "";
-      var operator = "";
-      var total = "";
-
-      //inputs
-
-      //numbers
-      //add number to first-number and second-number depending on operations
-      $(".number").on("click", function () {
-
-        if (total != "") {
-          clear();
+$(document).ready(function() {
+    var Random = Math.floor(Math.random() * 101 + 19)
+        // Selects a random number to be shown at the start of the game
+        // Number should be should be between 19 - 120
+        //
+    $('#randomNumber').text(Random);
+    // Appending random number to the randomNumber id in the html doc
+    //
+    var num1 = Math.floor(Math.random() * 11 + 1)
+    var num2 = Math.floor(Math.random() * 11 + 1)
+    var num3 = Math.floor(Math.random() * 11 + 1)
+    var num4 = Math.floor(Math.random() * 11 + 1)
+        // Setting up random numbers for each jewel
+        // Random number has to be between 1 - 12
+        // 
+    var userTotal = 0;
+    var wins = 0;
+    var losses = 0;
+    //  Decaring variables for tallies
+    $('#numberWins').text(wins);
+    $('#numberLosses').text(losses);
+    //resets the game
+    function reset() {
+        Random = Math.floor(Math.random() * 101 + 19);
+        console.log(Random)
+        $('#randomNumber').text(Random);
+        num1 = Math.floor(Math.random() * 11 + 1);
+        num2 = Math.floor(Math.random() * 11 + 1);
+        num3 = Math.floor(Math.random() * 11 + 1);
+        num4 = Math.floor(Math.random() * 11 + 1);
+        userTotal = 0;
+        $('#finalTotal').text(userTotal);
+    }
+    //adds the wins to the userTotal
+    function yay() {
+        alert("You won!");
+        wins++;
+        $('#numberWins').text(wins);
+        reset();
+    }
+    //addes the losses to the userTotal
+    function loser() {
+        alert("You lose!");
+        losses++;
+        $('#numberLosses').text(losses);
+        reset()
+    }
+    //sets up click for jewels
+    $('#one').on('click', function() {
+        userTotal = userTotal + num1;
+        console.log("New userTotal= " + userTotal);
+        $('#finalTotal').text(userTotal);
+        //sets win/lose conditions
+        if (userTotal == Random) {
+            yay();
+        } else if (userTotal > Random) {
+            loser();
         }
-
-        if (operator === "") {
-          //working with first number
-          firstNum += this.value;
-          $("#first-number").text(firstNum);
-          console.log(firstNum);
-        } else {
-          //working with second number
-          secondNum += this.value;
-          $("#second-number").text(secondNum);
+    })
+    $('#two').on('click', function() {
+        userTotal = userTotal + num2;
+        console.log("New userTotal= " + userTotal);
+        $('#finalTotal').text(userTotal);
+        if (userTotal == Random) {
+            yay();
+        } else if (userTotal > Random) {
+            loser();
         }
-      });
-
-      //operators
-      //when can we click
-      $(".operator").on("click", function () {
-
-        console.log(firstNum);
-        if (firstNum === "") {
-          return;
+    })
+    $('#three').on('click', function() {
+        userTotal = userTotal + num3;
+        console.log("New userTotal= " + userTotal);
+        $('#finalTotal').text(userTotal);
+        //sets win/lose conditions
+        if (userTotal == Random) {
+            yay();
+        } else if (userTotal > Random) {
+            loser();
         }
+    })
+    $('#four').on('click', function() {
+        userTotal = userTotal + num4;
+        console.log("New userTotal= " + userTotal);
+        $('#finalTotal').text(userTotal);
 
-        operator = this.value;
-
-        switch (operator) {
-          case "plus":
-            $("#operator").html("+");
-            break;
-          case "minus":
-            $("#operator").html("&minus;");
-            break;
-          case "times":
-            $("#operator").html("x");
-            break;
-          case "power":
-            $("#operator").html("^");
-            break;
-          case "divide":
-            $("#operator").html("&divide;");
-            break;
-          default:
-            break;
-
+        if (userTotal == Random) {
+            yay();
+        } else if (userTotal > Random) {
+            loser();
         }
-      });
-
-      //equal
-      $(".equal").on("click", function () {
-        console.log(secondNum);
-        if (secondNum === "") {
-          return;
-        }
-
-        switch (operator) {
-          case "plus":
-            total = parseInt(firstNum) + parseInt(secondNum);
-            break;
-          case "minus":
-            total = parseInt(firstNum) - parseInt(secondNum);
-            break;
-          case "times":
-            total = parseInt(firstNum) * parseInt(secondNum);
-            break;
-          case "power":
-            total = Math.pow(parseInt(firstNum), parseInt(secondNum));
-            break;
-          case "divide":
-            total = parseInt(firstNum) / parseInt(secondNum);
-
-            break;
-          default:
-            break;
-
-        }
-        console.log(isFinite(total));
-        if (!isFinite(total)) {
-          $("#result").text("N/A");
-        } else {
-          $("#result").text(total);
-        }
-
-
-      });
-
-      //clear
-      $(".clear").on("click", clear);
-
-      function clear() {
-        $("#first-number").empty();
-        $("#operator").empty();
-        $("#second-number").empty();
-        $("#result").empty();
-// $("#first-number,#operator,#second-number,#result").empty();                           ")
-        firstNum = "";
-        secondNum = "";
-        operator = "";
-        total = "";
-      }
-
-
-
     });
-
+});
